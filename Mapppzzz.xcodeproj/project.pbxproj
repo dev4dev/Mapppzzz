@@ -8,9 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		5F5924B71FF7B64FCA13CEDA /* libPods-Mapppzzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */; };
+		633B8ED81B94EA200095AB25 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633B8ED71B94EA200095AB25 /* MapKit.framework */; };
+		633B8EDA1B94EA2A0095AB25 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633B8ED91B94EA2A0095AB25 /* CoreLocation.framework */; };
+		633B8EDD1B94EB410095AB25 /* BookmarksListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EDC1B94EB410095AB25 /* BookmarksListViewController.m */; };
+		633B8EE01B94EB4B0095AB25 /* BookmarkDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EDF1B94EB4B0095AB25 /* BookmarkDetailsViewController.m */; };
+		633B8EE41B94EBC50095AB25 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EE21B94EBC50095AB25 /* Model.xcdatamodeld */; };
+		633B8EE81B94EC630095AB25 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EE71B94EC630095AB25 /* CoreDataStack.m */; };
+		633B8EEA1B94EC900095AB25 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633B8EE91B94EC900095AB25 /* CoreData.framework */; };
+		633B8EED1B94EE660095AB25 /* LocationValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EEC1B94EE660095AB25 /* LocationValueTransformer.m */; };
+		633B8EF31B94F0420095AB25 /* Bookmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EF21B94F0420095AB25 /* Bookmark.m */; };
+		633B8EF61B94F0B30095AB25 /* NSManagedObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EF51B94F0B30095AB25 /* NSManagedObject+Additions.m */; };
+		633B8EFA1B94F54A0095AB25 /* BookmarksViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */; };
+		633B8EFE1B94F8810095AB25 /* BookmarksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */; };
+		633B8EFF1B94F8810095AB25 /* BookmarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */; };
+		633B8F021B94FC170095AB25 /* BookmarkViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8F011B94FC170095AB25 /* BookmarkViewModel.m */; };
 		63B746361B94E6010062B621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746351B94E6010062B621 /* main.m */; };
 		63B746391B94E6010062B621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746381B94E6010062B621 /* AppDelegate.m */; };
-		63B7463C1B94E6010062B621 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B7463B1B94E6010062B621 /* ViewController.m */; };
+		63B7463C1B94E6010062B621 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B7463B1B94E6010062B621 /* MapViewController.m */; };
 		63B7463F1B94E6010062B621 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63B7463D1B94E6010062B621 /* Main.storyboard */; };
 		63B746411B94E6010062B621 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63B746401B94E6010062B621 /* Images.xcassets */; };
 		63B746441B94E6010062B621 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B746421B94E6010062B621 /* LaunchScreen.xib */; };
@@ -28,13 +42,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		633B8ED71B94EA200095AB25 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		633B8ED91B94EA2A0095AB25 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		633B8EDB1B94EB410095AB25 /* BookmarksListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksListViewController.h; sourceTree = "<group>"; };
+		633B8EDC1B94EB410095AB25 /* BookmarksListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksListViewController.m; sourceTree = "<group>"; };
+		633B8EDE1B94EB4B0095AB25 /* BookmarkDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkDetailsViewController.h; sourceTree = "<group>"; };
+		633B8EDF1B94EB4B0095AB25 /* BookmarkDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkDetailsViewController.m; sourceTree = "<group>"; };
+		633B8EE31B94EBC50095AB25 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		633B8EE61B94EC630095AB25 /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
+		633B8EE71B94EC630095AB25 /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
+		633B8EE91B94EC900095AB25 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		633B8EEB1B94EE660095AB25 /* LocationValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationValueTransformer.h; sourceTree = "<group>"; };
+		633B8EEC1B94EE660095AB25 /* LocationValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationValueTransformer.m; sourceTree = "<group>"; };
+		633B8EF11B94F0420095AB25 /* Bookmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bookmark.h; sourceTree = "<group>"; };
+		633B8EF21B94F0420095AB25 /* Bookmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bookmark.m; sourceTree = "<group>"; };
+		633B8EF41B94F0B30095AB25 /* NSManagedObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Additions.h"; sourceTree = "<group>"; };
+		633B8EF51B94F0B30095AB25 /* NSManagedObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Additions.m"; sourceTree = "<group>"; };
+		633B8EF81B94F54A0095AB25 /* BookmarksViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksViewModel.h; sourceTree = "<group>"; };
+		633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewModel.m; sourceTree = "<group>"; };
+		633B8EFB1B94F8810095AB25 /* BookmarksTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksTableViewCell.h; sourceTree = "<group>"; };
+		633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksTableViewCell.m; sourceTree = "<group>"; };
+		633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarksTableViewCell.xib; sourceTree = "<group>"; };
+		633B8F001B94FC170095AB25 /* BookmarkViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkViewModel.h; sourceTree = "<group>"; };
+		633B8F011B94FC170095AB25 /* BookmarkViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkViewModel.m; sourceTree = "<group>"; };
 		63B746301B94E6010062B621 /* Mapppzzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mapppzzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B746341B94E6010062B621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B746351B94E6010062B621 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		63B746371B94E6010062B621 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		63B746381B94E6010062B621 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		63B7463A1B94E6010062B621 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		63B7463B1B94E6010062B621 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		63B7463A1B94E6010062B621 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		63B7463B1B94E6010062B621 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		63B7463E1B94E6010062B621 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63B746401B94E6010062B621 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63B746431B94E6010062B621 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -51,6 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				633B8EEA1B94EC900095AB25 /* CoreData.framework in Frameworks */,
+				633B8EDA1B94EA2A0095AB25 /* CoreLocation.framework in Frameworks */,
+				633B8ED81B94EA200095AB25 /* MapKit.framework in Frameworks */,
 				5F5924B71FF7B64FCA13CEDA /* libPods-Mapppzzz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +108,9 @@
 		07475C9144FFE26E7148E27F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				633B8EE91B94EC900095AB25 /* CoreData.framework */,
+				633B8ED91B94EA2A0095AB25 /* CoreLocation.framework */,
+				633B8ED71B94EA200095AB25 /* MapKit.framework */,
 				D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */,
 			);
 			name = Frameworks;
@@ -80,6 +123,30 @@
 				B9158387E264AA453F53AE1A /* Pods-Mapppzzz.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		633B8EE51B94EC4C0095AB25 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				633B8EE61B94EC630095AB25 /* CoreDataStack.h */,
+				633B8EE71B94EC630095AB25 /* CoreDataStack.m */,
+				633B8EEB1B94EE660095AB25 /* LocationValueTransformer.h */,
+				633B8EEC1B94EE660095AB25 /* LocationValueTransformer.m */,
+				633B8EF41B94F0B30095AB25 /* NSManagedObject+Additions.h */,
+				633B8EF51B94F0B30095AB25 /* NSManagedObject+Additions.m */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		633B8EF71B94F5340095AB25 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				633B8EF81B94F54A0095AB25 /* BookmarksViewModel.h */,
+				633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */,
+				633B8F001B94FC170095AB25 /* BookmarkViewModel.h */,
+				633B8F011B94FC170095AB25 /* BookmarkViewModel.m */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		63B746271B94E6010062B621 = {
@@ -107,6 +174,7 @@
 			children = (
 				63F727FF1B94E900002FBEAC /* Controllers */,
 				63F728011B94E93E002FBEAC /* Views */,
+				633B8EF71B94F5340095AB25 /* ViewModels */,
 				63F728001B94E931002FBEAC /* Models */,
 				63F728021B94E94C002FBEAC /* Helpers */,
 				63B746371B94E6010062B621 /* AppDelegate.h */,
@@ -115,6 +183,7 @@
 				63B746401B94E6010062B621 /* Images.xcassets */,
 				63B746421B94E6010062B621 /* LaunchScreen.xib */,
 				63B746331B94E6010062B621 /* Supporting Files */,
+				633B8EE21B94EBC50095AB25 /* Model.xcdatamodeld */,
 			);
 			path = Mapppzzz;
 			sourceTree = "<group>";
@@ -148,8 +217,12 @@
 		63F727FF1B94E900002FBEAC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				63B7463A1B94E6010062B621 /* ViewController.h */,
-				63B7463B1B94E6010062B621 /* ViewController.m */,
+				63B7463A1B94E6010062B621 /* MapViewController.h */,
+				63B7463B1B94E6010062B621 /* MapViewController.m */,
+				633B8EDB1B94EB410095AB25 /* BookmarksListViewController.h */,
+				633B8EDC1B94EB410095AB25 /* BookmarksListViewController.m */,
+				633B8EDE1B94EB4B0095AB25 /* BookmarkDetailsViewController.h */,
+				633B8EDF1B94EB4B0095AB25 /* BookmarkDetailsViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -157,6 +230,8 @@
 		63F728001B94E931002FBEAC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				633B8EF11B94F0420095AB25 /* Bookmark.h */,
+				633B8EF21B94F0420095AB25 /* Bookmark.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -164,6 +239,9 @@
 		63F728011B94E93E002FBEAC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				633B8EFB1B94F8810095AB25 /* BookmarksTableViewCell.h */,
+				633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */,
+				633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +249,7 @@
 		63F728021B94E94C002FBEAC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				633B8EE51B94EC4C0095AB25 /* CoreData */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -260,6 +339,7 @@
 				63B7463F1B94E6010062B621 /* Main.storyboard in Resources */,
 				63B746441B94E6010062B621 /* LaunchScreen.xib in Resources */,
 				63B746411B94E6010062B621 /* Images.xcassets in Resources */,
+				633B8EFF1B94F8810095AB25 /* BookmarksTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,9 +390,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63B7463C1B94E6010062B621 /* ViewController.m in Sources */,
+				633B8EDD1B94EB410095AB25 /* BookmarksListViewController.m in Sources */,
+				63B7463C1B94E6010062B621 /* MapViewController.m in Sources */,
+				633B8EE81B94EC630095AB25 /* CoreDataStack.m in Sources */,
+				633B8EF31B94F0420095AB25 /* Bookmark.m in Sources */,
+				633B8EE01B94EB4B0095AB25 /* BookmarkDetailsViewController.m in Sources */,
 				63B746391B94E6010062B621 /* AppDelegate.m in Sources */,
+				633B8F021B94FC170095AB25 /* BookmarkViewModel.m in Sources */,
 				63B746361B94E6010062B621 /* main.m in Sources */,
+				633B8EFA1B94F54A0095AB25 /* BookmarksViewModel.m in Sources */,
+				633B8EF61B94F0B30095AB25 /* NSManagedObject+Additions.m in Sources */,
+				633B8EED1B94EE660095AB25 /* LocationValueTransformer.m in Sources */,
+				633B8EE41B94EBC50095AB25 /* Model.xcdatamodeld in Sources */,
+				633B8EFE1B94F8810095AB25 /* BookmarksTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +611,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		633B8EE21B94EBC50095AB25 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				633B8EE31B94EBC50095AB25 /* Model.xcdatamodel */,
+			);
+			currentVersion = 633B8EE31B94EBC50095AB25 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 63B746281B94E6010062B621 /* Project object */;
 }

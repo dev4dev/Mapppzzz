@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vxX-MK-Pfm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="MapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,11 +15,135 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="t8n-c7-vSu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="t8n-c7-vSu" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="VoP-4U-YYs"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="t8n-c7-vSu" secondAttribute="bottom" id="nbD-v0-gEf"/>
+                            <constraint firstAttribute="trailing" secondItem="t8n-c7-vSu" secondAttribute="trailing" id="ybg-2r-5Ps"/>
+                            <constraint firstItem="t8n-c7-vSu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="zsr-ys-S49"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="TbC-a3-4hC">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="frV-0R-ILB">
+                            <connections>
+                                <segue destination="jdf-HJ-VVz" kind="show" id="COl-sp-5QU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1197" y="949"/>
+        </scene>
+        <!--Bookmarks-->
+        <scene sceneID="M7O-TW-zI6">
+            <objects>
+                <viewController id="jdf-HJ-VVz" customClass="BookmarksListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rXf-RX-Cmp"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nnz-ge-Ne8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Zzn-PH-Zwb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zOY-pW-rky">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" textLabel="NAE-2W-49h" style="IBUITableViewCellStyleDefault" id="Oc2-nu-Go2" customClass="BookmarksTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oc2-nu-Go2" id="Ub5-Nz-ma4">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NAE-2W-49h">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="pz1-rF-W7a" kind="show" identifier="BookmarkDetails" id="nnA-35-w56"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="jdf-HJ-VVz" id="9l7-Zy-Jnd"/>
+                                    <outlet property="delegate" destination="jdf-HJ-VVz" id="4Ko-yj-9OX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zOY-pW-rky" firstAttribute="leading" secondItem="Zzn-PH-Zwb" secondAttribute="leading" id="1wz-gP-sIb"/>
+                            <constraint firstItem="Nnz-ge-Ne8" firstAttribute="top" secondItem="zOY-pW-rky" secondAttribute="bottom" id="5CH-h9-484"/>
+                            <constraint firstItem="zOY-pW-rky" firstAttribute="top" secondItem="Zzn-PH-Zwb" secondAttribute="top" id="iS1-n7-aOC"/>
+                            <constraint firstAttribute="trailing" secondItem="zOY-pW-rky" secondAttribute="trailing" id="quO-4s-0TG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Bookmarks" id="wot-Nc-ldG"/>
+                    <connections>
+                        <outlet property="tableView" destination="zOY-pW-rky" id="mBh-sb-uaF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dP-sa-Yct" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="CFH-AL-gO9" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1854" y="949"/>
+        </scene>
+        <!--Bookmark Details View Controller-->
+        <scene sceneID="McB-Yg-MBM">
+            <objects>
+                <viewController id="pz1-rF-W7a" customClass="BookmarkDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kLH-Jg-JjZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zq8-Jg-yuU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rxj-EB-QBN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OtF-lF-ZtE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="GAP-Kq-Tdc">
+                            <connections>
+                                <action selector="onDeleteBookmark:" destination="pz1-rF-W7a" id="lLW-TN-iub"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="CFH-AL-gO9" kind="unwind" identifier="GoBackSegue" unwindAction="unwindToBookmarksList:" id="YGJ-wp-zTy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JxS-gY-lck" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="949"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0Zr-O3-8Se">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vxX-MK-Pfm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Niu-nb-iKT">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="Jn5-m0-VD8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LHG-Cl-x91" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="483" y="949"/>
         </scene>
     </scenes>
 </document>
