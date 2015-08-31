@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F5924B71FF7B64FCA13CEDA /* libPods-Mapppzzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */; };
 		63B746361B94E6010062B621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746351B94E6010062B621 /* main.m */; };
 		63B746391B94E6010062B621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746381B94E6010062B621 /* AppDelegate.m */; };
 		63B7463C1B94E6010062B621 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B7463B1B94E6010062B621 /* ViewController.m */; };
@@ -40,6 +41,9 @@
 		63B746491B94E6010062B621 /* MapppzzzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapppzzzTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B7464E1B94E6010062B621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B7464F1B94E6010062B621 /* MapppzzzTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapppzzzTests.m; sourceTree = "<group>"; };
+		B9158387E264AA453F53AE1A /* Pods-Mapppzzz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapppzzz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mapppzzz/Pods-Mapppzzz.release.xcconfig"; sourceTree = "<group>"; };
+		D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mapppzzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA16ED0169A6259CF5C02AC1 /* Pods-Mapppzzz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapppzzz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mapppzzz/Pods-Mapppzzz.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F5924B71FF7B64FCA13CEDA /* libPods-Mapppzzz.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +65,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07475C9144FFE26E7148E27F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5D787E5A1E572D7B35418E52 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA16ED0169A6259CF5C02AC1 /* Pods-Mapppzzz.debug.xcconfig */,
+				B9158387E264AA453F53AE1A /* Pods-Mapppzzz.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		63B746271B94E6010062B621 = {
 			isa = PBXGroup;
 			children = (
 				63B746321B94E6010062B621 /* Mapppzzz */,
 				63B7464C1B94E6010062B621 /* MapppzzzTests */,
 				63B746311B94E6010062B621 /* Products */,
+				5D787E5A1E572D7B35418E52 /* Pods */,
+				07475C9144FFE26E7148E27F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,9 +150,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63B746531B94E6010062B621 /* Build configuration list for PBXNativeTarget "Mapppzzz" */;
 			buildPhases = (
+				26B9322502933B1B2187D7FE /* Check Pods Manifest.lock */,
 				63B7462C1B94E6010062B621 /* Sources */,
 				63B7462D1B94E6010062B621 /* Frameworks */,
 				63B7462E1B94E6010062B621 /* Resources */,
+				DDE77B9BD9C55775156C5630 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -213,6 +239,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		26B9322502933B1B2187D7FE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DDE77B9BD9C55775156C5630 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mapppzzz/Pods-Mapppzzz-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		63B7462C1B94E6010062B621 /* Sources */ = {
@@ -345,6 +404,7 @@
 		};
 		63B746541B94E6010062B621 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA16ED0169A6259CF5C02AC1 /* Pods-Mapppzzz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Mapppzzz/Info.plist;
@@ -355,6 +415,7 @@
 		};
 		63B746551B94E6010062B621 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9158387E264AA453F53AE1A /* Pods-Mapppzzz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Mapppzzz/Info.plist;
@@ -416,6 +477,7 @@
 				63B746551B94E6010062B621 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		63B746561B94E6010062B621 /* Build configuration list for PBXNativeTarget "MapppzzzTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +486,7 @@
 				63B746581B94E6010062B621 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
