@@ -10,8 +10,14 @@
 
 @class BookmarkViewModel;
 
+typedef NS_ENUM(NSInteger, UnwindTo) {
+	UnwindToMap,
+	UnwindToList
+};
+
 @interface BookmarkDetailsViewController : UIViewController
 
 @property (nonatomic, strong) BookmarkViewModel *viewModel;
+@property (nonatomic, assign) UnwindTo unwindDestination;
 
 @end

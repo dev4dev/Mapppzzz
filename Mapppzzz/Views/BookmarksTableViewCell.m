@@ -28,6 +28,7 @@ setViewModel:(BookmarkViewModel *)viewModel
 - (void)updateView
 {
 	self.textLabel.text = self.viewModel.name;
+	self.detailTextLabel.text = [NSString stringWithFormat:@"lat=%f lon=%f", self.viewModel.location.coordinate.latitude, self.viewModel.location.coordinate.longitude];
 }
 
 @end

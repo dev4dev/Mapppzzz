@@ -20,7 +20,6 @@
 		633B8EF61B94F0B30095AB25 /* NSManagedObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EF51B94F0B30095AB25 /* NSManagedObject+Additions.m */; };
 		633B8EFA1B94F54A0095AB25 /* BookmarksViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */; };
 		633B8EFE1B94F8810095AB25 /* BookmarksTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */; };
-		633B8EFF1B94F8810095AB25 /* BookmarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */; };
 		633B8F021B94FC170095AB25 /* BookmarkViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 633B8F011B94FC170095AB25 /* BookmarkViewModel.m */; };
 		63B746361B94E6010062B621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746351B94E6010062B621 /* main.m */; };
 		63B746391B94E6010062B621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746381B94E6010062B621 /* AppDelegate.m */; };
@@ -29,6 +28,8 @@
 		63B746411B94E6010062B621 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63B746401B94E6010062B621 /* Images.xcassets */; };
 		63B746441B94E6010062B621 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63B746421B94E6010062B621 /* LaunchScreen.xib */; };
 		63B746501B94E6010062B621 /* MapppzzzTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B7464F1B94E6010062B621 /* MapppzzzTests.m */; };
+		63E7E4671B964E6C003BA485 /* BookmarkViewModel+MapKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E7E4661B964E6C003BA485 /* BookmarkViewModel+MapKit.m */; };
+		63E7E4691B965374003BA485 /* Location.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 63E7E4681B965374003BA485 /* Location.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +63,6 @@
 		633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewModel.m; sourceTree = "<group>"; };
 		633B8EFB1B94F8810095AB25 /* BookmarksTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarksTableViewCell.h; sourceTree = "<group>"; };
 		633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarksTableViewCell.m; sourceTree = "<group>"; };
-		633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarksTableViewCell.xib; sourceTree = "<group>"; };
 		633B8F001B94FC170095AB25 /* BookmarkViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkViewModel.h; sourceTree = "<group>"; };
 		633B8F011B94FC170095AB25 /* BookmarkViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkViewModel.m; sourceTree = "<group>"; };
 		63B746301B94E6010062B621 /* Mapppzzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mapppzzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +78,9 @@
 		63B746491B94E6010062B621 /* MapppzzzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapppzzzTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B7464E1B94E6010062B621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B7464F1B94E6010062B621 /* MapppzzzTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapppzzzTests.m; sourceTree = "<group>"; };
+		63E7E4651B964E6C003BA485 /* BookmarkViewModel+MapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BookmarkViewModel+MapKit.h"; sourceTree = "<group>"; };
+		63E7E4661B964E6C003BA485 /* BookmarkViewModel+MapKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BookmarkViewModel+MapKit.m"; sourceTree = "<group>"; };
+		63E7E4681B965374003BA485 /* Location.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		B9158387E264AA453F53AE1A /* Pods-Mapppzzz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapppzzz.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mapppzzz/Pods-Mapppzzz.release.xcconfig"; sourceTree = "<group>"; };
 		D681247D25961A5B5F8B179D /* libPods-Mapppzzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mapppzzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA16ED0169A6259CF5C02AC1 /* Pods-Mapppzzz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mapppzzz.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mapppzzz/Pods-Mapppzzz.debug.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				633B8EF91B94F54A0095AB25 /* BookmarksViewModel.m */,
 				633B8F001B94FC170095AB25 /* BookmarkViewModel.h */,
 				633B8F011B94FC170095AB25 /* BookmarkViewModel.m */,
+				63E7E4651B964E6C003BA485 /* BookmarkViewModel+MapKit.h */,
+				63E7E4661B964E6C003BA485 /* BookmarkViewModel+MapKit.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 				63B7463D1B94E6010062B621 /* Main.storyboard */,
 				63B746401B94E6010062B621 /* Images.xcassets */,
 				63B746421B94E6010062B621 /* LaunchScreen.xib */,
+				63E7E4681B965374003BA485 /* Location.gpx */,
 				63B746331B94E6010062B621 /* Supporting Files */,
 				633B8EE21B94EBC50095AB25 /* Model.xcdatamodeld */,
 			);
@@ -241,7 +247,6 @@
 			children = (
 				633B8EFB1B94F8810095AB25 /* BookmarksTableViewCell.h */,
 				633B8EFC1B94F8810095AB25 /* BookmarksTableViewCell.m */,
-				633B8EFD1B94F8810095AB25 /* BookmarksTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -338,8 +343,8 @@
 			files = (
 				63B7463F1B94E6010062B621 /* Main.storyboard in Resources */,
 				63B746441B94E6010062B621 /* LaunchScreen.xib in Resources */,
+				63E7E4691B965374003BA485 /* Location.gpx in Resources */,
 				63B746411B94E6010062B621 /* Images.xcassets in Resources */,
-				633B8EFF1B94F8810095AB25 /* BookmarksTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E7E4671B964E6C003BA485 /* BookmarkViewModel+MapKit.m in Sources */,
 				633B8EDD1B94EB410095AB25 /* BookmarksListViewController.m in Sources */,
 				63B7463C1B94E6010062B621 /* MapViewController.m in Sources */,
 				633B8EE81B94EC630095AB25 /* CoreDataStack.m in Sources */,

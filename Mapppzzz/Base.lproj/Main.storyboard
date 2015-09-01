@@ -16,8 +16,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="t8n-c7-vSu">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t8n-c7-vSu">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="TS3-Qi-X5C"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -31,10 +34,14 @@
                     <navigationItem key="navigationItem" id="TbC-a3-4hC">
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="frV-0R-ILB">
                             <connections>
-                                <segue destination="jdf-HJ-VVz" kind="show" id="COl-sp-5QU"/>
+                                <segue destination="jdf-HJ-VVz" kind="show" identifier="ShowBookmarksList" id="COl-sp-5QU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="t8n-c7-vSu" id="Das-ms-XWX"/>
+                        <segue destination="pz1-rF-W7a" kind="show" identifier="ShowBookmarkDetails" id="bwR-Xi-HqD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -56,7 +63,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" textLabel="NAE-2W-49h" style="IBUITableViewCellStyleDefault" id="Oc2-nu-Go2" customClass="BookmarksTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" textLabel="NAE-2W-49h" detailTextLabel="d7v-Qo-PzB" style="IBUITableViewCellStyleSubtitle" id="Oc2-nu-Go2" customClass="BookmarksTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oc2-nu-Go2" id="Ub5-Nz-ma4">
@@ -65,6 +72,12 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NAE-2W-49h">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d7v-Qo-PzB">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -120,10 +133,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="CFH-AL-gO9" kind="unwind" identifier="GoBackSegue" unwindAction="unwindToBookmarksList:" id="YGJ-wp-zTy"/>
+                        <segue destination="CFH-AL-gO9" kind="unwind" identifier="ToList" unwindAction="unwindToBookmarksList:" id="YGJ-wp-zTy"/>
+                        <segue destination="l94-1b-VgN" kind="unwind" identifier="ToMap" unwindAction="unwindToMapController:" id="3kH-2c-vAd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JxS-gY-lck" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="l94-1b-VgN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2512" y="949"/>
         </scene>
@@ -146,4 +161,7 @@
             <point key="canvasLocation" x="483" y="949"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bwR-Xi-HqD"/>
+    </inferredMetricsTieBreakers>
 </document>

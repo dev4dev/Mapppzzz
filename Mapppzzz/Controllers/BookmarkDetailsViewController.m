@@ -9,7 +9,8 @@
 #import "BookmarkDetailsViewController.h"
 #include "BookmarkViewModel.h"
 
-static NSString *const kGoBackSegueIdentifier = @"GoBackSegue";
+static NSString *const kToMapSegueIdentifier = @"ToMap";
+static NSString *const kToListSegueIdentifier = @"ToList";
 
 @interface BookmarkDetailsViewController ()
 
@@ -48,7 +49,16 @@ static NSString *const kGoBackSegueIdentifier = @"GoBackSegue";
 	UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Do you really want to delete this nice bookmark?" preferredStyle:UIAlertControllerStyleAlert];
 	[alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
 		[self.viewModel deleteModel];
-		[self performSegueWithIdentifier:kGoBackSegueIdentifier sender:self];
+		switch (self.unwindDestination) {
+			case UnwindToMap: {
+				[self performSegueWithIdentifier:kToMapSegueIdentifier sender:self];
+				break;
+			}
+			case UnwindToList: {
+				[self performSegueWithIdentifier:kToListSegueIdentifier sender:self];
+				break;
+			}
+		}
 	}]];
 	[alert addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil]];
 	[self presentViewController:alert animated:YES completion:nil];

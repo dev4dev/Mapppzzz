@@ -7,7 +7,6 @@
 //
 
 #import "BookmarksListViewController.h"
-#import "CoreDataStack.h"
 #import "BookmarksViewModel.h"
 #import "BookmarksTableViewCell.h"
 #import "BookmarkDetailsViewController.h"
@@ -20,7 +19,6 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) BookmarksViewModel *viewModel;
 @property (nonatomic, strong) NSFetchedResultsController *resultsController;
 
 @end
@@ -53,8 +51,6 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 
 - (void)setupData
 {
-	self.viewModel = [[BookmarksViewModel alloc] initWithCoreDataStack:[CoreDataStack sharedStack]];
-
 	self.resultsController = [self.viewModel bookmarksFetchedresultController];
 	self.resultsController.delegate = self;
 	[self.resultsController performFetch:nil];
@@ -96,13 +92,14 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 		BookmarksTableViewCell *cell = (BookmarksTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
 		BookmarkDetailsViewController *detailsVC = segue.destinationViewController;
+		detailsVC.unwindDestination = UnwindToList;
 		detailsVC.viewModel = cell.viewModel;
 	}
 }
 
 - (IBAction)unwindToBookmarksList:(UIStoryboardSegue *)segue
 {
-	NSLog(@"ok");
+	
 }
 
 #pragma mark - TableView DataSource

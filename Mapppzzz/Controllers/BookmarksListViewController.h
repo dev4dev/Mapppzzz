@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class BookmarksViewModel;
+
 @interface BookmarksListViewController : UIViewController
+
+@property (nonatomic, strong) BookmarksViewModel *viewModel;
 
 @end
