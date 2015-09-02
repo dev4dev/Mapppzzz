@@ -61,4 +61,23 @@
 #pragma mark - Private methods
 
 
+#pragma mark - Equal
+
+- (BOOL)isEqual:(id)other
+{
+	if (other == self) {
+		return YES;
+	} else if ([other isKindOfClass:[BookmarkViewModel class]]) {
+		BookmarkViewModel *obj = (BookmarkViewModel *)other;
+		return [self.location isEqual:obj.location];
+	}
+
+	return NO;
+}
+
+- (NSUInteger)hash
+{
+	return self.location.hash;
+}
+
 @end

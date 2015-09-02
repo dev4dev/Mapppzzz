@@ -13,6 +13,7 @@
 #import "BookmarksListViewController.h"
 #import "BookmarksViewModel.h"
 #import "BookmarkViewModel.h"
+#import "BookmarkViewModel+MapKit.h"
 #import "CoreDataStack.h"
 #import <YOLOKit/YOLO.h>
 #import "BookmarkDetailsViewController.h"
@@ -92,7 +93,6 @@ updateAnnotationsOnMap
 	[self.mapView removeAnnotations:self.mapView.annotations];
 
 	NSArray *annotations = self.fetchController.fetchedObjects.map(^(Bookmark *bookmark){
-		NSLog(@"%@", bookmark.location);
 		return [[BookmarkViewModel alloc] initWithModel:bookmark];
 	});
 	[self.mapView addAnnotations:annotations];
@@ -123,6 +123,20 @@ updateAnnotationsOnMap
 - (IBAction)unwindToMapController:(UIStoryboardSegue *)segue
 {
 	
+}
+
+- (IBAction)onMapLongTap:(UILongPressGestureRecognizer *)gesture
+{
+	if (gesture.state == UIGestureRecognizerStateBegan) {
+		CGPoint tapPoint = [gesture locationInView:self.mapView];
+		CLLocationCoordinate2D coordinates = [self.mapView convertPoint:tapPoint toCoordinateFromView:self.mapView];
+		CLLocation *location = [[CLLocation alloc] initWithCoordinate:coordinates
+															 altitude:0
+												   horizontalAccuracy:0
+													 verticalAccuracy:0
+															timestamp:[NSDate date]];
+		[self.viewModel addBookmarkWithName:nil atLocation:location];
+	}
 }
 
 #pragma mark - LocationManager Delegate
@@ -174,9 +188,34 @@ updateAnnotationsOnMap
 
 #pragma mark - Fetched Result Controller
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-	[self updateAnnotationsOnMap];
+	switch (type) {
+		case NSFetchedResultsChangeInsert: {
+			Bookmark *bookmark = [self.fetchController objectAtIndexPath:newIndexPath];
+			BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+			[self.mapView addAnnotation:viewModel];
+			break;
+		}
+		case NSFetchedResultsChangeDelete: {
+			Bookmark *bookmark = [self.fetchController objectAtIndexPath:newIndexPath];
+			BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+			[self.mapView removeAnnotation:viewModel];
+			break;
+		}
+		case NSFetchedResultsChangeUpdate: {
+
+			break;
+		}
+		default: {
+			break;
+		}
+	}
 }
+
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//	[self updateAnnotationsOnMap];
+//}
 
 @end
