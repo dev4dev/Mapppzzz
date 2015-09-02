@@ -25,6 +25,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	<CLLocationManagerDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *routeBarItem;
 
 @property (nonatomic, strong) BookmarksViewModel *viewModel;
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -139,6 +140,11 @@ updateAnnotationsOnMap
 	}
 }
 
+- (IBAction)onRouteButtonTap:(id)sender
+{
+	NSLog(@"show popup");
+}
+
 #pragma mark - LocationManager Delegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -161,7 +167,6 @@ updateAnnotationsOnMap
 		return userLocation;
 	} else {
 		MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Bookmark"];
-		NSLog(@"%@", annotation);
 		if (!pinView) {
 			pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Bookmark"];
 			pinView.canShowCallout = YES;

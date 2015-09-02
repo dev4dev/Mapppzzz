@@ -34,6 +34,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TbC-a3-4hC">
+                        <barButtonItem key="leftBarButtonItem" title="Route" id="2NG-dH-8ec">
+                            <connections>
+                                <action selector="onRouteButtonTap:" destination="vXZ-lx-hvc" id="W7Z-40-mpx"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="frV-0R-ILB">
                             <connections>
                                 <segue destination="jdf-HJ-VVz" kind="show" identifier="ShowBookmarksList" id="COl-sp-5QU"/>
@@ -42,6 +47,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="t8n-c7-vSu" id="Das-ms-XWX"/>
+                        <outlet property="routeBarItem" destination="2NG-dH-8ec" id="zkK-eA-amJ"/>
                         <segue destination="pz1-rF-W7a" kind="show" identifier="ShowBookmarkDetails" id="bwR-Xi-HqD"/>
                     </connections>
                 </viewController>
