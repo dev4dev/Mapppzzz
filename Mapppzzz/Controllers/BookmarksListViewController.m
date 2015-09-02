@@ -19,7 +19,7 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) NSFetchedResultsController *resultsController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchController;
 
 @end
 
@@ -47,13 +47,15 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 - (void)setupView
 {
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+	[self.tableView registerNib:[UINib nibWithNibName:@"BookmarksTableViewCell" bundle:nil] forCellReuseIdentifier:@"BookmarkCell"];
 }
 
 - (void)setupData
 {
-	self.resultsController = [self.viewModel bookmarksFetchedresultController];
-	self.resultsController.delegate = self;
-	[self.resultsController performFetch:nil];
+	self.fetchController = [self.viewModel bookmarksFetchedresultController];
+	self.fetchController.delegate = self;
+	[self.fetchController performFetch:nil];
 }
 
 #pragma mark - Properties Getters
@@ -79,7 +81,7 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
 		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		Bookmark *bookmark = [self.resultsController objectAtIndexPath:indexPath];
+		Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
 
 		bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
 	}
@@ -106,8 +108,7 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	id<NSFetchedResultsSectionInfo> s = [self.resultsController.sections firstObject];
-	return [s numberOfObjects];
+	return self.fetchController.fetchedObjects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -36,7 +36,7 @@
                     <navigationItem key="navigationItem" id="TbC-a3-4hC">
                         <barButtonItem key="leftBarButtonItem" title="Route" id="2NG-dH-8ec">
                             <connections>
-                                <action selector="onRouteButtonTap:" destination="vXZ-lx-hvc" id="W7Z-40-mpx"/>
+                                <action selector="onRouteButtonTap:event:" destination="vXZ-lx-hvc" id="mkx-TR-wKL"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="frV-0R-ILB">
@@ -75,32 +75,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zOY-pW-rky">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" textLabel="NAE-2W-49h" detailTextLabel="d7v-Qo-PzB" style="IBUITableViewCellStyleSubtitle" id="Oc2-nu-Go2" customClass="BookmarksTableViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oc2-nu-Go2" id="Ub5-Nz-ma4">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NAE-2W-49h">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d7v-Qo-PzB">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="pz1-rF-W7a" kind="show" identifier="BookmarkDetails" id="nnA-35-w56"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="jdf-HJ-VVz" id="9l7-Zy-Jnd"/>
                                     <outlet property="delegate" destination="jdf-HJ-VVz" id="4Ko-yj-9OX"/>
@@ -174,7 +148,4 @@
             <point key="canvasLocation" x="483" y="949"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="bwR-Xi-HqD"/>
-    </inferredMetricsTieBreakers>
 </document>
