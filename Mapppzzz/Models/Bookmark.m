@@ -11,6 +11,7 @@
 
 @implementation Bookmark
 
+@dynamic identifier;
 @dynamic name;
 @dynamic location;
 

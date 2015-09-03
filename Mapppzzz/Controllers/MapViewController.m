@@ -17,6 +17,7 @@
 #import "BookmarksTableViewCell.h"
 #import "CoreDataStack.h"
 #import "BookmarkDetailsViewController.h"
+#import "Constants.h"
 
 #import <YOLOKit/YOLO.h>
 #import <DXPopover/DXPopover.h>
@@ -47,6 +48,19 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 
 #pragma mark - Init & Dealloc
 
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super initWithCoder:aDecoder]) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBookmarkDeleteNotification:) name:kBookmarkDeletedNotification object:nil];
+	}
+
+	return self;
+}
 
 #pragma mark - Lifecycle (Setup/Update)
 
@@ -130,8 +144,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}
 }
 
-- (void)
-updateAnnotationsOnMap
+- (void)updateAnnotationsOnMap
 {
 	[self.mapView removeAnnotations:self.mapView.annotations];
 
@@ -141,8 +154,7 @@ updateAnnotationsOnMap
 	[self.mapView addAnnotations:annotations];
 }
 
-- (void)
-removeAnnotationsOnMapExceptThis:(BookmarkViewModel *)bookmark
+- (void)removeAnnotationsOnMapExceptThis:(BookmarkViewModel *)bookmark
 {
 	NSArray *annotations = self.mapView.annotations.reject(^BOOL(BookmarkViewModel *annotation){
 		return [annotation isEqual:bookmark];
@@ -150,8 +162,7 @@ removeAnnotationsOnMapExceptThis:(BookmarkViewModel *)bookmark
 	[self.mapView removeAnnotations:annotations];
 }
 
-- (void)
-configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
 		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
@@ -265,6 +276,9 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 - (IBAction)onMapLongTap:(UILongPressGestureRecognizer *)gesture
 {
 	if (gesture.state == UIGestureRecognizerStateBegan) {
+		if ([self inRouteMode]) {
+			return;
+		}
 		CGPoint tapPoint = [gesture locationInView:self.mapView];
 		CLLocationCoordinate2D coordinates = [self.mapView convertPoint:tapPoint toCoordinateFromView:self.mapView];
 		CLLocation *location = [[CLLocation alloc] initWithCoordinate:coordinates
@@ -283,6 +297,15 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 	} else {
 		UITouch *touch = [event.allTouches anyObject];
 		[self.popover showAtView:touch.view withContentView:self.tableView];
+	}
+}
+
+- (void)onBookmarkDeleteNotification:(NSNotification *)notification
+{
+	BookmarkViewModel *viewModel = notification.object;
+
+	if ([self.mapView.annotations containsObject:viewModel]) {
+		[self clearRoute];
 	}
 }
 
@@ -356,19 +379,6 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 			Bookmark *bookmark = [self.fetchController objectAtIndexPath:newIndexPath];
 			BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
 			[self.mapView addAnnotation:viewModel];
-			break;
-		}
-		case NSFetchedResultsChangeDelete: {
-			Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
-			BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
-			if (self.inRouteMode && [self.mapView.annotations containsObject:viewModel]) {
-				[self clearRoute];
-			}
-			[self.mapView removeAnnotation:viewModel];
-			break;
-		}
-		case NSFetchedResultsChangeUpdate: {
-
 			break;
 		}
 		default: {

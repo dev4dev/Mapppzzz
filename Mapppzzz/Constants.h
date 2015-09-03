@@ -12,4 +12,6 @@
 static NSString *const kToMapSegueIdentifier = @"ToMap";
 static NSString *const kToListSegueIdentifier = @"ToList";
 
+static NSString *const kBookmarkDeletedNotification = @"BookmarkDeletedNotification";
+
 #endif

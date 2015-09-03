@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong, readonly) Bookmark *model;
 
+@property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, strong, readonly) CLLocation *location;
 @property (nonatomic, assign, readonly) BOOL isNamed;

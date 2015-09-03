@@ -12,6 +12,7 @@
 
 @interface Bookmark : NSManagedObject
 
+@property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) CLLocation *location;
 

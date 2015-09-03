@@ -10,6 +10,7 @@
 #import "BookmarksViewModel.h"
 #import "CoreDataStack.h"
 #import "PlaceModel.h"
+#import "Constants.h"
 
 @interface BookmarkViewModel ()
 
@@ -25,6 +26,8 @@
 {
 	if (self = [self init]) {
 		_model = model;
+
+		_identifier = [model.identifier copy];
 	}
 
 	return self;
@@ -61,6 +64,7 @@
 	[context performBlockAndWait:^{
 		[context deleteObject:self.model];
 		[context save:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kBookmarkDeletedNotification object:self];
 	}];
 }
 
@@ -75,6 +79,11 @@
 
 #pragma mark - Private methods
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@: %@ %@", [super description], self.name, self.identifier];
+}
+
 
 #pragma mark - Equal
 
@@ -84,7 +93,7 @@
 		return YES;
 	} else if ([other isKindOfClass:[BookmarkViewModel class]]) {
 		BookmarkViewModel *obj = (BookmarkViewModel *)other;
-		return [self.location isEqual:obj.location];
+		return [self.identifier isEqualToString:obj.identifier];
 	}
 
 	return NO;
@@ -92,7 +101,7 @@
 
 - (NSUInteger)hash
 {
-	return self.location.hash;
+	return self.identifier.hash;
 }
 
 @end

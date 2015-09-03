@@ -50,6 +50,7 @@
 	__block Bookmark *bookmark;
 	[self.context performBlockAndWait:^{
 		bookmark = [Bookmark insertObjectIntoContext:self.context];
+		bookmark.identifier = [[NSUUID UUID] UUIDString];
 		bookmark.name = name;
 		bookmark.location = location;
 		NSError *error;
