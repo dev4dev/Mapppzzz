@@ -92,12 +92,13 @@
                     <navigationItem key="navigationItem" title="Bookmarks" id="wot-Nc-ldG"/>
                     <connections>
                         <outlet property="tableView" destination="zOY-pW-rky" id="mBh-sb-uaF"/>
+                        <segue destination="pz1-rF-W7a" kind="show" identifier="BookmarkDetails" id="Huq-2C-wSq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3dP-sa-Yct" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="CFH-AL-gO9" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1854" y="949"/>
+            <point key="canvasLocation" x="1828" y="1104"/>
         </scene>
         <!--Bookmark Details View Controller-->
         <scene sceneID="McB-Yg-MBM">
@@ -110,16 +111,85 @@
                     <view key="view" contentMode="scaleToFill" id="Rxj-EB-QBN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookmark name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dy4-9r-WR3">
+                                <rect key="frame" x="16" y="72" width="126.5" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sl2-RA-8ap">
+                                <rect key="frame" x="16" y="100" width="568" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="MnP-2O-VqR">
+                                <rect key="frame" x="281" y="281" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rjq-jW-Ecj">
+                                <rect key="frame" x="0.0" y="127" width="600" height="472.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearbe places:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GM-et-n4o">
+                                        <rect key="frame" x="16" y="0.0" width="112" height="19.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hZp-RB-cY5">
+                                        <rect key="frame" x="0.0" y="27" width="600" height="445.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="pz1-rF-W7a" id="8oL-5h-lTc"/>
+                                            <outlet property="delegate" destination="pz1-rF-W7a" id="5ik-wn-T2g"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="7GM-et-n4o" firstAttribute="leading" secondItem="Rjq-jW-Ecj" secondAttribute="leading" constant="16" id="34O-Nb-L2e"/>
+                                    <constraint firstAttribute="trailing" secondItem="hZp-RB-cY5" secondAttribute="trailing" id="6Fw-pV-xiW"/>
+                                    <constraint firstItem="hZp-RB-cY5" firstAttribute="leading" secondItem="Rjq-jW-Ecj" secondAttribute="leading" id="Dor-oB-9ou"/>
+                                    <constraint firstAttribute="bottom" secondItem="hZp-RB-cY5" secondAttribute="bottom" id="Le3-yo-3b3"/>
+                                    <constraint firstItem="7GM-et-n4o" firstAttribute="top" secondItem="Rjq-jW-Ecj" secondAttribute="top" id="MWO-i3-dlr"/>
+                                    <constraint firstItem="hZp-RB-cY5" firstAttribute="top" secondItem="7GM-et-n4o" secondAttribute="bottom" constant="8" id="i6k-o5-p1b"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKG-Sn-nLH">
+                                <rect key="frame" x="453" y="67" width="131" height="30"/>
+                                <state key="normal" title="Load Nearby Place">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onLoadNearbyPlaces:" destination="pz1-rF-W7a" eventType="touchUpInside" id="iOS-nt-1TV"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Zq8-Jg-yuU" firstAttribute="top" secondItem="Rjq-jW-Ecj" secondAttribute="bottom" id="1M0-FS-CiK"/>
+                            <constraint firstAttribute="trailing" secondItem="sl2-RA-8ap" secondAttribute="trailing" constant="16" id="3Xj-gn-rYh"/>
+                            <constraint firstAttribute="trailing" secondItem="IKG-Sn-nLH" secondAttribute="trailing" constant="16" id="5Vr-5Y-Y9u"/>
+                            <constraint firstItem="Rjq-jW-Ecj" firstAttribute="top" secondItem="sl2-RA-8ap" secondAttribute="bottom" constant="8" id="7Vk-3t-2bt"/>
+                            <constraint firstItem="Rjq-jW-Ecj" firstAttribute="leading" secondItem="Rxj-EB-QBN" secondAttribute="leading" id="DM4-tW-FLw"/>
+                            <constraint firstItem="sl2-RA-8ap" firstAttribute="leading" secondItem="Rxj-EB-QBN" secondAttribute="leading" constant="16" id="Ni7-IT-rxk"/>
+                            <constraint firstAttribute="trailing" secondItem="Rjq-jW-Ecj" secondAttribute="trailing" id="TxY-gv-qpv"/>
+                            <constraint firstAttribute="centerX" secondItem="MnP-2O-VqR" secondAttribute="centerX" id="YKz-fX-fdt"/>
+                            <constraint firstAttribute="centerY" secondItem="MnP-2O-VqR" secondAttribute="centerY" id="ewk-jm-u8I"/>
+                            <constraint firstItem="sl2-RA-8ap" firstAttribute="top" secondItem="Dy4-9r-WR3" secondAttribute="bottom" constant="8" id="fvw-rI-T5v"/>
+                            <constraint firstItem="Dy4-9r-WR3" firstAttribute="top" secondItem="kLH-Jg-JjZ" secondAttribute="bottom" constant="8" id="hip-YX-1hX"/>
+                            <constraint firstItem="Dy4-9r-WR3" firstAttribute="leading" secondItem="Rxj-EB-QBN" secondAttribute="leading" constant="16" id="iAz-MG-Lgg"/>
+                            <constraint firstItem="IKG-Sn-nLH" firstAttribute="top" secondItem="kLH-Jg-JjZ" secondAttribute="bottom" constant="3" id="rtI-xn-149"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="OtF-lF-ZtE">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="GAP-Kq-Tdc">
-                            <connections>
-                                <action selector="onDeleteBookmark:" destination="pz1-rF-W7a" id="lLW-TN-iub"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="OtF-lF-ZtE"/>
                     <connections>
+                        <outlet property="loadingIndicator" destination="MnP-2O-VqR" id="Cgf-KZ-ivQ"/>
+                        <outlet property="nameLabel" destination="sl2-RA-8ap" id="sVS-QF-Yrk"/>
+                        <outlet property="tableContainer" destination="Rjq-jW-Ecj" id="iUP-e1-Os2"/>
+                        <outlet property="tableView" destination="hZp-RB-cY5" id="Hrp-xh-GHa"/>
                         <segue destination="CFH-AL-gO9" kind="unwind" identifier="ToList" unwindAction="unwindToBookmarksList:" id="YGJ-wp-zTy"/>
                         <segue destination="l94-1b-VgN" kind="unwind" identifier="ToMap" unwindAction="unwindToMapController:" id="3kH-2c-vAd"/>
                     </connections>
@@ -148,4 +218,7 @@
             <point key="canvasLocation" x="483" y="949"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Huq-2C-wSq"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -134,6 +134,11 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 	}
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	[self performSegueWithIdentifier:@"BookmarkDetails" sender:self];
+}
+
 #pragma mark - NSFetchedResultsController Delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller

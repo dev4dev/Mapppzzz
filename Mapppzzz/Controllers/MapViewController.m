@@ -163,6 +163,8 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 
 - (void)buildRouteToBookmark:(BookmarkViewModel *)bookmark
 {
+	[self clearRoute]; // clear out any existing route
+
 	[MMProgressHUD showWithTitle:@"Building route to..." status:bookmark.title];
 	self.inRouteMode = YES;
 	[self removeAnnotationsOnMapExceptThis:bookmark];
@@ -194,6 +196,13 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 	self.inRouteMode = NO;
 	[self.mapView removeOverlay:self.currentRoute.polyline];
 	[self updateAnnotationsOnMap];
+}
+
+- (void)centerMapAtLocation:(CLLocation *)location
+{
+	CGFloat regionSideSize = 100000; // 100km
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, regionSideSize, regionSideSize);
+	[self.mapView setRegion:region animated:YES];
 }
 
 #pragma mark - UI Actions
@@ -230,7 +239,27 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 
 - (IBAction)unwindToMapController:(UIStoryboardSegue *)segue
 {
-	
+	if ([segue.sourceViewController isKindOfClass:[BookmarkDetailsViewController class]]) {
+		BookmarkDetailsViewController *vc = segue.sourceViewController;
+		BookmarkViewModel *viewModel = vc.viewModel;
+		switch (vc.action) {
+			case DetailsActionNone: {
+				// do nothing
+				break;
+			}
+			case DetailsActionCenterMap: {
+				[self centerMapAtLocation:viewModel.location];
+				break;
+			}
+			case DetailsActionBuildRoute: {
+				[self buildRouteToBookmark:viewModel];
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	}
 }
 
 - (IBAction)onMapLongTap:(UILongPressGestureRecognizer *)gesture
@@ -278,12 +307,12 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 		}
 		return userLocation;
 	} else {
-		MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Bookmark"];
+		MKAnnotationView *pinView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Bookmark"];
 		if (!pinView) {
-			pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Bookmark"];
+			pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Bookmark"];
 			pinView.canShowCallout = YES;
-			pinView.animatesDrop = YES;
-			pinView.pinColor = MKPinAnnotationColorRed;
+			pinView.image = [UIImage imageNamed:@"icon_bookmark"];
+			pinView.centerOffset = CGPointMake(0.0, -8.0);
 			pinView.rightCalloutAccessoryView = ({
 				UIButton *details = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 				[details addTarget:self action:@selector(onShowBookmarkDetails:) forControlEvents:UIControlEventTouchUpInside];
@@ -307,10 +336,7 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	if (userLocation) {
 		[mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
-
-		CGFloat regionSideSize = 100000; // 100km
-		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, regionSideSize, regionSideSize);
-		[mapView setRegion:region animated:YES];
+		[self centerMapAtLocation:userLocation.location];
 	}
 }
 

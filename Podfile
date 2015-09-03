@@ -2,6 +2,13 @@
 platform :ios, '8.0'
 inhibit_all_warnings!
 
+plugin 'cocoapods-keys', {
+  :project => "Map",
+  :keys => [
+    "ClientId",
+    "ClientSecret"
+  ]}
+
 target 'Mapppzzz' do
   pod 'AFNetworking', '~> 2.6'
   pod 'YOLOKit/map'

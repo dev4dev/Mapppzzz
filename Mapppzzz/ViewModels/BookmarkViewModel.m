@@ -9,6 +9,7 @@
 #import "BookmarkViewModel.h"
 #import "BookmarksViewModel.h"
 #import "CoreDataStack.h"
+#import "PlaceModel.h"
 
 @interface BookmarkViewModel ()
 
@@ -44,6 +45,11 @@
 	return self.model.location;
 }
 
+- (BOOL)isNamed
+{
+	return self.model.name.length > 0;
+}
+
 #pragma mark - Properties Setters
 
 
@@ -54,6 +60,15 @@
 	NSManagedObjectContext *context = [CoreDataStack sharedStack].context;
 	[context performBlockAndWait:^{
 		[context deleteObject:self.model];
+		[context save:nil];
+	}];
+}
+
+- (void)updateBookmarkWithPlace:(PlaceModel *)place
+{
+	NSManagedObjectContext *context = [CoreDataStack sharedStack].context;
+	[context performBlockAndWait:^{
+		self.model.name = place.name;
 		[context save:nil];
 	}];
 }

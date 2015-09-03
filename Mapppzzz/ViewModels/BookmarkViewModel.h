@@ -10,6 +10,7 @@
 @import CoreLocation;
 
 @class Bookmark;
+@class PlaceModel;
 
 @interface BookmarkViewModel : NSObject
 
@@ -17,9 +18,12 @@
 
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, strong, readonly) CLLocation *location;
+@property (nonatomic, assign, readonly) BOOL isNamed;
 
 - (instancetype)initWithModel:(Bookmark *)model;
 
 - (void)deleteModel;
+
+- (void)updateBookmarkWithPlace:(PlaceModel *)place;
 
 @end

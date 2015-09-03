@@ -10,6 +10,12 @@
 
 @class BookmarkViewModel;
 
+typedef NS_ENUM(NSInteger, DetailsAction) {
+	DetailsActionNone,
+	DetailsActionCenterMap,
+	DetailsActionBuildRoute
+};
+
 typedef NS_ENUM(NSInteger, UnwindTo) {
 	UnwindToMap,
 	UnwindToList
@@ -19,5 +25,6 @@ typedef NS_ENUM(NSInteger, UnwindTo) {
 
 @property (nonatomic, strong) BookmarkViewModel *viewModel;
 @property (nonatomic, assign) UnwindTo unwindDestination;
+@property (nonatomic, assign, readonly) DetailsAction action;
 
 @end
