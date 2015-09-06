@@ -12,7 +12,7 @@
 
 typedef void(^BookmarksViewModelVoidBlock)(void);
 
-@class Bookmark;
+@class BookmarkViewModel;
 
 @interface BookmarksViewModel : NSObject
 
@@ -26,9 +26,9 @@ typedef void(^BookmarksViewModelVoidBlock)(void);
  *	@param name			Bookmark name (Optional
  *	@param location		Bookmark's Location
  *
- *	@return Bookmark object
+ *	@return BookmarkViewModel object
  */
-- (Bookmark *)addBookmarkWithName:(NSString *)name atLocation:(CLLocation *)location;
+- (BookmarkViewModel *)addBookmarkWithName:(NSString *)name atLocation:(CLLocation *)location;
 
 /**
  *	Returns Fetch Request for all Bookmarks

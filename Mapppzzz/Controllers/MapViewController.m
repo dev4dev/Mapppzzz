@@ -224,8 +224,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 		if (self.mapViewDataSource.inRouteMode) {
 			return;
 		}
-		Bookmark *bookmark = [self.viewModel addBookmarkWithName:nil atLocation:[self.mapView locationFromGesture:gesture]];
-		BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+		BookmarkViewModel *viewModel = [self.viewModel addBookmarkWithName:nil atLocation:[self.mapView locationFromGesture:gesture]];
 		[self.mapViewDataSource addAnnotation:viewModel];
 	}
 }

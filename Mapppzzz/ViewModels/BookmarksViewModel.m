@@ -8,6 +8,7 @@
 
 #import "BookmarksViewModel.h"
 #import "CoreDataStack.h"
+#import "BookmarkViewModel.h"
 #import "NSManagedObject+Additions.h"
 
 @interface BookmarksViewModel ()
@@ -52,7 +53,7 @@
 
 #pragma mark - Public Interface
 
-- (Bookmark *)addBookmarkWithName:(NSString *)name atLocation:(CLLocation *)location
+- (BookmarkViewModel *)addBookmarkWithName:(NSString *)name atLocation:(CLLocation *)location
 {
 	__block Bookmark *bookmark;
 	[self.context performBlockAndWait:^{
@@ -63,7 +64,7 @@
 		NSError *error;
 		[self.context save:&error];
 	}];
-	return bookmark;
+	return [[BookmarkViewModel alloc] initWithModel:bookmark];
 }
 
 - (NSFetchRequest *)bookmarksFetchRequest
