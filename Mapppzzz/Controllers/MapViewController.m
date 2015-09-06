@@ -15,9 +15,10 @@
 #import "BookmarkViewModel.h"
 #import "BookmarkViewModel+MapKit.h"
 #import "BookmarksTableViewCell.h"
-#import "CoreDataStack.h"
 #import "BookmarkDetailsViewController.h"
 #import "Constants.h"
+#import "MapViewDataSource.h"
+#import "MKMapView+Additions.h"
 
 #import <YOLOKit/YOLO.h>
 #import <DXPopover/DXPopover.h>
@@ -27,7 +28,7 @@ static NSString *const kShowBookmarksListSegueIdentifier = @"ShowBookmarksList";
 static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetails";
 
 @interface MapViewController ()
-	<CLLocationManagerDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+	<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *routeBarItem;
@@ -36,11 +37,8 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 @property (nonatomic, strong) BookmarksViewModel *viewModel;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) DXPopover *popover;
-@property (nonatomic, assign) BOOL inRouteMode;
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchController;
-
-@property (nonatomic, strong) MKRoute *currentRoute;
+@property (nonatomic, strong) MapViewDataSource *mapViewDataSource;
 
 @end
 
@@ -69,18 +67,51 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-	_inRouteMode = NO;
-	self.viewModel = [[BookmarksViewModel alloc] initWithCoreDataStack:[CoreDataStack sharedStack]];
+	[self setupBookmarksViewModel];
+	[self setupMapViewDataSource];
+
 	[self setupLocationManager];
 	[self setupData];
-	[self updateAnnotationsOnMap];
 }
 
 - (void)setupData
 {
-	self.fetchController = [self.viewModel bookmarksFetchedresultController];
-	self.fetchController.delegate = self;
-	[self.fetchController performFetch:nil];
+	NSArray *annotations = [self.viewModel bookmarks].map(^(Bookmark *bookmark){
+		return [[BookmarkViewModel alloc] initWithModel:bookmark];
+	});
+	[self.mapViewDataSource addAnnotations:annotations];
+	[self.mapViewDataSource updateAnnotationsOnMap];
+}
+
+- (void)setupBookmarksViewModel
+{
+	typeof(self) __weak wSelf = self;
+	self.viewModel = [[BookmarksViewModel alloc] initWithCoreDataStack:[CoreDataStack sharedStack]];
+	self.viewModel.bookmarksChangedBlock = ^{
+		[wSelf.tableView reloadData];
+	};
+}
+
+- (void)setupMapViewDataSource
+{
+	typeof(self) __weak wSelf = self;
+	self.mapViewDataSource = [[MapViewDataSource alloc] initWithMapView:self.mapView];
+	self.mapViewDataSource.annotationOnDetailsBlock = ^(id<MKAnnotation> annotation) {
+		[wSelf performSegueWithIdentifier:kShowBookmarkDetailsSegueIdentifier sender:annotation];
+	};
+	self.mapViewDataSource.annotationOnRouteBlock = ^(id<MKAnnotation> annotation) {
+		[wSelf buildRouteToAnnotation:annotation];
+	};
+	self.mapViewDataSource.routeStatusBlock = ^(BOOL status) {
+		if (status) {
+			wSelf.routeBarItem.title = @"Clear Route";
+		} else {
+			wSelf.routeBarItem.title = @"Route";
+		}
+	};
+	self.mapViewDataSource.changesBlock = ^(MapViewDataSourceOperation operation, id<MKAnnotation> annotation) {
+		[wSelf.tableView reloadData];
+	};
 }
 
 #pragma mark - Properties Getters
@@ -111,15 +142,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 
 #pragma mark - Properties Setters
 
-- (void)setInRouteMode:(BOOL)inRouteMode
-{
-	_inRouteMode = inRouteMode;
-	if (inRouteMode) {
-		self.routeBarItem.title = @"Clear Route";
-	} else {
-		self.routeBarItem.title = @"Route";
-	}
-}
 
 #pragma mark - Public Interface
 
@@ -129,7 +151,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 - (void)setupLocationManager
 {
 	self.locationManager = [CLLocationManager new];
-	self.locationManager.delegate = self;
 
 	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 	if (status == kCLAuthorizationStatusNotDetermined) {
@@ -144,76 +165,26 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}
 }
 
-- (void)updateAnnotationsOnMap
-{
-	[self.mapView removeAnnotations:self.mapView.annotations];
-
-	NSArray *annotations = self.fetchController.fetchedObjects.map(^(Bookmark *bookmark){
-		return [[BookmarkViewModel alloc] initWithModel:bookmark];
-	});
-	[self.mapView addAnnotations:annotations];
-}
-
-- (void)removeAnnotationsOnMapExceptThis:(BookmarkViewModel *)bookmark
-{
-	NSArray *annotations = self.mapView.annotations.reject(^BOOL(BookmarkViewModel *annotation){
-		return [annotation isEqual:bookmark];
-	});
-	[self.mapView removeAnnotations:annotations];
-}
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
 	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
 		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
-
-		bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+		bCell.viewModel = self.mapViewDataSource.annotations[indexPath.row];
 	}
 }
 
-- (void)buildRouteToBookmark:(BookmarkViewModel *)bookmark
+- (void)buildRouteToAnnotation:(id<MKAnnotation>)annotation
 {
-	[self clearRoute]; // clear out any existing route
-
-	[MMProgressHUD showWithTitle:@"Building route to..." status:bookmark.title];
-	self.inRouteMode = YES;
-	[self removeAnnotationsOnMapExceptThis:bookmark];
-
-	MKDirectionsRequest *directionsRequest = [[MKDirectionsRequest alloc] init];
-	directionsRequest.source = [MKMapItem mapItemForCurrentLocation];
-
-	MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:bookmark.location.coordinate addressDictionary:nil];
-	directionsRequest.destination = [[MKMapItem alloc] initWithPlacemark:placemark];
-	directionsRequest.transportType = MKDirectionsTransportTypeAutomobile;
-
-	MKDirections *directions = [[MKDirections alloc] initWithRequest:directionsRequest];
-	[directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+	typeof(self) __weak wSelf = self;
+	[MMProgressHUD showWithTitle:@"Building route to..." status:[annotation title]];
+	[self.mapViewDataSource buildRouteToAnnotation:annotation completion:^(BOOL status) {
 		[MMProgressHUD dismiss];
-		if (error) {
+		if (!status) {
 			UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Error while getting directions..." preferredStyle:UIAlertControllerStyleAlert];
 			[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-			[self presentViewController:alert animated:YES completion:nil];
-			[self clearRoute];
-		} else {
-			self.currentRoute = response.routes.lastObject;
-			[self.mapView addOverlay:self.currentRoute.polyline];
+			[wSelf presentViewController:alert animated:YES completion:nil];
 		}
 	}];
-}
-
-- (void)clearRoute
-{
-	self.inRouteMode = NO;
-	[self.mapView removeOverlay:self.currentRoute.polyline];
-	[self updateAnnotationsOnMap];
-}
-
-- (void)centerMapAtLocation:(CLLocation *)location
-{
-	CGFloat regionSideSize = 100000; // 100km
-	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, regionSideSize, regionSideSize);
-	[self.mapView setRegion:region animated:YES];
 }
 
 #pragma mark - UI Actions
@@ -230,24 +201,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}
 }
 
-- (void)onShowBookmarkDetails:(UIButton *)sender
-{
-	BookmarkViewModel *viewModel = [self.mapView.selectedAnnotations firstObject];
-	if (viewModel) {
-		[self performSegueWithIdentifier:kShowBookmarkDetailsSegueIdentifier sender:viewModel];
-	}
-	[self.mapView deselectAnnotation:[self.mapView.selectedAnnotations firstObject] animated:YES];
-}
-
-- (void)onBuildRouteToBookmark:(UIButton *)sender
-{
-	BookmarkViewModel *viewModel = [self.mapView.selectedAnnotations firstObject];
-	if (viewModel) {
-		[self buildRouteToBookmark:viewModel];
-	}
-	[self.mapView deselectAnnotation:[self.mapView.selectedAnnotations firstObject] animated:YES];
-}
-
 - (IBAction)unwindToMapController:(UIStoryboardSegue *)segue
 {
 	if ([segue.sourceViewController isKindOfClass:[BookmarkDetailsViewController class]]) {
@@ -259,11 +212,11 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 				break;
 			}
 			case DetailsActionCenterMap: {
-				[self centerMapAtLocation:viewModel.location];
+				[self.mapViewDataSource centerMapAtLocation:viewModel.location];
 				break;
 			}
 			case DetailsActionBuildRoute: {
-				[self buildRouteToBookmark:viewModel];
+				[self buildRouteToAnnotation:viewModel];
 				break;
 			}
 			default: {
@@ -276,24 +229,19 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 - (IBAction)onMapLongTap:(UILongPressGestureRecognizer *)gesture
 {
 	if (gesture.state == UIGestureRecognizerStateBegan) {
-		if ([self inRouteMode]) {
+		if (self.mapViewDataSource.inRouteMode) {
 			return;
 		}
-		CGPoint tapPoint = [gesture locationInView:self.mapView];
-		CLLocationCoordinate2D coordinates = [self.mapView convertPoint:tapPoint toCoordinateFromView:self.mapView];
-		CLLocation *location = [[CLLocation alloc] initWithCoordinate:coordinates
-															 altitude:0
-												   horizontalAccuracy:0
-													 verticalAccuracy:0
-															timestamp:[NSDate date]];
-		[self.viewModel addBookmarkWithName:nil atLocation:location];
+		Bookmark *bookmark = [self.viewModel addBookmarkWithName:nil atLocation:[self.mapView locationFromGesture:gesture]];
+		BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+		[self.mapViewDataSource addAnnotation:viewModel];
 	}
 }
 
 - (IBAction)onRouteButtonTap:(id)sender event:(UIEvent *)event
 {
-	if (self.inRouteMode) {
-		[self clearRoute];
+	if (self.mapViewDataSource.inRouteMode) {
+		[self.mapViewDataSource clearRoute];
 	} else {
 		UITouch *touch = [event.allTouches anyObject];
 		[self.popover showAtView:touch.view withContentView:self.tableView];
@@ -303,95 +251,17 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 - (void)onBookmarkDeleteNotification:(NSNotification *)notification
 {
 	BookmarkViewModel *viewModel = notification.object;
-
-	if ([self.mapView.annotations containsObject:viewModel]) {
-		[self clearRoute];
-	}
-}
-
-#pragma mark - LocationManager Delegate
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
-	NSLog(@"did change %d", status);
-}
-
-#pragma mark - MapView Delegate
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-	if ([annotation isKindOfClass:[MKUserLocation class]]) {
-		MKAnnotationView *userLocation = [mapView dequeueReusableAnnotationViewWithIdentifier:@"User"];
-		if (!userLocation) {
-			userLocation = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"User"];
-			userLocation.image = [UIImage imageNamed:@"icon_user"];
-		} else {
-			userLocation.annotation = annotation;
-		}
-		return userLocation;
-	} else {
-		MKAnnotationView *pinView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Bookmark"];
-		if (!pinView) {
-			pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Bookmark"];
-			pinView.canShowCallout = YES;
-			pinView.image = [UIImage imageNamed:@"icon_bookmark"];
-			pinView.centerOffset = CGPointMake(0.0, -8.0);
-			pinView.rightCalloutAccessoryView = ({
-				UIButton *details = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-				[details addTarget:self action:@selector(onShowBookmarkDetails:) forControlEvents:UIControlEventTouchUpInside];
-				details;
-			});
-			pinView.leftCalloutAccessoryView = ({
-				UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-				[button setImage:[UIImage imageNamed:@"icon_route_to"] forState:UIControlStateNormal];
-				[button addTarget:self action:@selector(onBuildRouteToBookmark:) forControlEvents:UIControlEventTouchUpInside];
-				[button sizeToFit];
-				button;
-			});
-		} else {
-			pinView.annotation = annotation;
-		}
-		return pinView;
-	}
-}
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-	if (userLocation) {
-		[mapView setCenterCoordinate:userLocation.location.coordinate animated:YES];
-		[self centerMapAtLocation:userLocation.location];
-	}
-}
-
--(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-	MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:self.currentRoute.polyline];
-	renderer.strokeColor = [UIColor blueColor];
-	renderer.lineWidth = 3;
-	return renderer;
+	[self.mapViewDataSource removeAnnotation:viewModel];
 }
 
 #pragma mark - Fetched Result Controller
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-	switch (type) {
-		case NSFetchedResultsChangeInsert: {
-			Bookmark *bookmark = [self.fetchController objectAtIndexPath:newIndexPath];
-			BookmarkViewModel *viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
-			[self.mapView addAnnotation:viewModel];
-			break;
-		}
-		default: {
-			break;
-		}
-	}
-}
 
 #pragma mark - TableView DD
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return self.fetchController.fetchedObjects.count;
+	return self.mapViewDataSource.annotations.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -407,8 +277,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
-	[self buildRouteToBookmark:[[BookmarkViewModel alloc] initWithModel:bookmark]];
+	[self buildRouteToAnnotation:self.mapViewDataSource.annotations[indexPath.row]];
 	[self.popover dismiss];
 }
 

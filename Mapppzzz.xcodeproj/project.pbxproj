@@ -25,6 +25,8 @@
 		6347E66E1B9782DC009B0B87 /* BookmarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6347E66D1B9782DC009B0B87 /* BookmarksTableViewCell.xib */; };
 		636F60A51B98C7E400B6DC1E /* FoursquareClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F60A41B98C7E400B6DC1E /* FoursquareClient.m */; };
 		636F60A91B98CDDA00B6DC1E /* PlaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 636F60A81B98CDDA00B6DC1E /* PlaceModel.m */; };
+		638B969F1B9C23EF005F6C36 /* MapViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638B969E1B9C23EF005F6C36 /* MapViewDataSource.m */; };
+		63A9B0A11B9C360B0044E99E /* MKMapView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A9B0A01B9C360B0044E99E /* MKMapView+Additions.m */; };
 		63B746361B94E6010062B621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746351B94E6010062B621 /* main.m */; };
 		63B746391B94E6010062B621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B746381B94E6010062B621 /* AppDelegate.m */; };
 		63B7463C1B94E6010062B621 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B7463B1B94E6010062B621 /* MapViewController.m */; };
@@ -75,6 +77,10 @@
 		636F60A61B98CD7900B6DC1E /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		636F60A71B98CDDA00B6DC1E /* PlaceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceModel.h; sourceTree = "<group>"; };
 		636F60A81B98CDDA00B6DC1E /* PlaceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceModel.m; sourceTree = "<group>"; };
+		638B969D1B9C23EF005F6C36 /* MapViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewDataSource.h; sourceTree = "<group>"; };
+		638B969E1B9C23EF005F6C36 /* MapViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewDataSource.m; sourceTree = "<group>"; };
+		63A9B09F1B9C360B0044E99E /* MKMapView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Additions.h"; sourceTree = "<group>"; };
+		63A9B0A01B9C360B0044E99E /* MKMapView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Additions.m"; sourceTree = "<group>"; };
 		63B746301B94E6010062B621 /* Mapppzzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mapppzzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63B746341B94E6010062B621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B746351B94E6010062B621 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -274,6 +280,10 @@
 				633B8EE51B94EC4C0095AB25 /* CoreData */,
 				636F60A31B98C7E400B6DC1E /* FoursquareClient.h */,
 				636F60A41B98C7E400B6DC1E /* FoursquareClient.m */,
+				638B969D1B9C23EF005F6C36 /* MapViewDataSource.h */,
+				638B969E1B9C23EF005F6C36 /* MapViewDataSource.m */,
+				63A9B09F1B9C360B0044E99E /* MKMapView+Additions.h */,
+				63A9B0A01B9C360B0044E99E /* MKMapView+Additions.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -416,9 +426,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E7E4671B964E6C003BA485 /* BookmarkViewModel+MapKit.m in Sources */,
+				63A9B0A11B9C360B0044E99E /* MKMapView+Additions.m in Sources */,
 				633B8EDD1B94EB410095AB25 /* BookmarksListViewController.m in Sources */,
 				63B7463C1B94E6010062B621 /* MapViewController.m in Sources */,
 				633B8EE81B94EC630095AB25 /* CoreDataStack.m in Sources */,
+				638B969F1B9C23EF005F6C36 /* MapViewDataSource.m in Sources */,
 				633B8EF31B94F0420095AB25 /* Bookmark.m in Sources */,
 				636F60A51B98C7E400B6DC1E /* FoursquareClient.m in Sources */,
 				633B8EE01B94EB4B0095AB25 /* BookmarkDetailsViewController.m in Sources */,

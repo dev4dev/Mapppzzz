@@ -10,9 +10,13 @@
 #import "Bookmark.h"
 #import "CoreDataStack.h"
 
+typedef void(^BookmarksViewModelVoidBlock)(void);
+
 @class Bookmark;
 
 @interface BookmarksViewModel : NSObject
+
+@property (nonatomic, copy) BookmarksViewModelVoidBlock bookmarksChangedBlock;
 
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack;
 
@@ -39,5 +43,12 @@
  *	@return Results Controller
  */
 - (NSFetchedResultsController *)bookmarksFetchedresultController;
+
+/**
+ *	Returns all bookmarks
+ *
+ *	@return Array of bookmarks
+ */
+- (NSArray *)bookmarks;
 
 @end
