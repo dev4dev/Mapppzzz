@@ -88,7 +88,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	typeof(self) __weak wSelf = self;
 	self.viewModel = [[BookmarksViewModel alloc] initWithCoreDataStack:[CoreDataStack sharedStack]];
 	self.viewModel.bookmarksChangedBlock = ^{
-		[wSelf.tableView reloadData];
+		[wSelf.tableView reloadData]; // model update
 	};
 }
 
@@ -110,7 +110,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 		}
 	};
 	self.mapViewDataSource.changesBlock = ^(MapViewDataSourceOperation operation, id<MKAnnotation> annotation) {
-		[wSelf.tableView reloadData];
+		[wSelf.tableView reloadData]; // model add/delete
 	};
 }
 
