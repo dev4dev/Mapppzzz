@@ -165,14 +165,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
-		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		bCell.viewModel = self.mapViewDataSource.annotations[indexPath.row];
-	}
-}
-
 - (void)buildRouteToAnnotation:(id<MKAnnotation>)annotation
 {
 	typeof(self) __weak wSelf = self;
@@ -254,9 +246,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	[self.mapViewDataSource removeAnnotation:viewModel];
 }
 
-#pragma mark - Fetched Result Controller
-
-
 #pragma mark - TableView DD
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -271,7 +260,10 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self configureCell:cell atIndexPath:indexPath];
+	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
+		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
+		bCell.viewModel = self.mapViewDataSource.annotations[indexPath.row];
+	}
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

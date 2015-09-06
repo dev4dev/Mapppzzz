@@ -76,17 +76,6 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 	[self.tableView setEditing:editing animated:animated];
 }
 
-- (void)
-configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
-		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
-
-		bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
-	}
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.identifier isEqualToString:@"BookmarkDetails"]) {
@@ -118,7 +107,12 @@ configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self configureCell:cell atIndexPath:indexPath];
+	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
+		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
+		Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
+
+		bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+	}
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
