@@ -35,7 +35,7 @@
                     <navigationItem key="navigationItem" id="TbC-a3-4hC">
                         <barButtonItem key="leftBarButtonItem" title="Route" id="2NG-dH-8ec">
                             <connections>
-                                <action selector="onRouteButtonTap:event:" destination="vXZ-lx-hvc" id="mkx-TR-wKL"/>
+                                <action selector="onRouteButtonTap:" destination="vXZ-lx-hvc" id="Yin-n3-Seg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="frV-0R-ILB">
@@ -218,6 +218,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Huq-2C-wSq"/>
+        <segue reference="bwR-Xi-HqD"/>
     </inferredMetricsTieBreakers>
 </document>

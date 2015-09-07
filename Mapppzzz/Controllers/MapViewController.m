@@ -147,6 +147,20 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}];
 }
 
+- (void)showPopoverWithBookmarksFromBarItem:(UIBarButtonItem *)barItem
+{
+	typeof(self) __weak wSelf = self;
+	BookmarksListViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"BookmarksListViewController"];
+	vc.viewModel = self.viewModel;
+	vc.bookmarkSelectedBlock = ^(BookmarkViewModel *viewModel) {
+		[wSelf.popover dismissPopoverAnimated:YES completion:^{
+			[wSelf buildRouteToAnnotation:viewModel];
+		}];
+	};
+	self.popover = [[WYPopoverController alloc] initWithContentViewController:vc];
+	[self.popover presentPopoverFromBarButtonItem:barItem permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+}
+
 #pragma mark - UI Actions
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -197,21 +211,12 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	}
 }
 
-- (IBAction)onRouteButtonTap:(id)sender event:(UIEvent *)event
+- (IBAction)onRouteButtonTap:(id)sender
 {
 	if (self.mapViewDataSource.inRouteMode) {
 		[self.mapViewDataSource clearRoute];
 	} else {
-		typeof(self) __weak wSelf = self;
-		BookmarksListViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"BookmarksListViewController"];
-		vc.viewModel = self.viewModel;
-		vc.bookmarkSelectedBlock = ^(BookmarkViewModel *viewModel) {
-			[wSelf.popover dismissPopoverAnimated:YES completion:^{
-				[wSelf buildRouteToAnnotation:viewModel];
-			}];
-		};
-		self.popover = [[WYPopoverController alloc] initWithContentViewController:vc];
-		[self.popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+		[self showPopoverWithBookmarksFromBarItem:sender];
 	}
 }
 
