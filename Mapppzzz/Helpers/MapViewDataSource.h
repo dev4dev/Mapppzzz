@@ -9,14 +9,8 @@
 #import <Foundation/Foundation.h>
 @import MapKit;
 
-typedef NS_ENUM(NSInteger, MapViewDataSourceOperation) {
-	MapViewDataSourceOperationAdded,
-	MapViewDataSourceOperationDeleted
-};
-
 typedef void(^MapViewDataSourceAnnotationBlock)(id<MKAnnotation> annotation);
 typedef void(^MapViewDataSourceStatusBlock)(BOOL status);
-typedef void(^MapViewDataSourceChangesBlock)(MapViewDataSourceOperation operation, id<MKAnnotation> annotation);
 
 @interface MapViewDataSource : NSObject
 
@@ -26,7 +20,6 @@ typedef void(^MapViewDataSourceChangesBlock)(MapViewDataSourceOperation operatio
 @property (nonatomic, copy) MapViewDataSourceAnnotationBlock annotationOnDetailsBlock;
 @property (nonatomic, copy) MapViewDataSourceAnnotationBlock annotationOnRouteBlock;
 @property (nonatomic, copy) MapViewDataSourceStatusBlock routeStatusBlock;
-@property (nonatomic, copy) MapViewDataSourceChangesBlock changesBlock;
 
 - (instancetype)initWithMapView:(MKMapView *)mapView;
 

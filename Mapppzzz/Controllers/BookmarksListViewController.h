@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class BookmarksViewModel;
+@class BookmarkViewModel;
+
+typedef void(^BookmarksListBookmarkBlock)(BookmarkViewModel	*viewModel);
 
 @interface BookmarksListViewController : UIViewController
 
 @property (nonatomic, strong) BookmarksViewModel *viewModel;
+@property (nonatomic, copy) BookmarksListBookmarkBlock bookmarkSelectedBlock;
 
 @end

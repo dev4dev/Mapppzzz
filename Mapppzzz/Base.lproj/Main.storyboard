@@ -62,7 +62,7 @@
         <!--Bookmarks-->
         <scene sceneID="M7O-TW-zI6">
             <objects>
-                <viewController id="jdf-HJ-VVz" customClass="BookmarksListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BookmarksListViewController" id="jdf-HJ-VVz" customClass="BookmarksListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rXf-RX-Cmp"/>
                         <viewControllerLayoutGuide type="bottom" id="Nnz-ge-Ne8"/>
@@ -218,6 +218,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bwR-Xi-HqD"/>
+        <segue reference="Huq-2C-wSq"/>
     </inferredMetricsTieBreakers>
 </document>

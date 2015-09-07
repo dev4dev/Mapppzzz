@@ -21,22 +21,20 @@
 #import "MKMapView+Additions.h"
 
 #import <YOLOKit/YOLO.h>
-#import <DXPopover/DXPopover.h>
 #import <MMProgressHUD/MMProgressHUD.h>
+#import <WYPopoverController/WYPopoverController.h>
 
 static NSString *const kShowBookmarksListSegueIdentifier = @"ShowBookmarksList";
 static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetails";
 
 @interface MapViewController ()
-	<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet MKMapView *mapView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *routeBarItem;
-@property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) BookmarksViewModel *viewModel;
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) DXPopover *popover;
+@property (nonatomic, strong) WYPopoverController *popover;
 
 @property (nonatomic, strong) MapViewDataSource *mapViewDataSource;
 
@@ -85,11 +83,7 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 
 - (void)setupBookmarksViewModel
 {
-	typeof(self) __weak wSelf = self;
 	self.viewModel = [[BookmarksViewModel alloc] initWithCoreDataStack:[CoreDataStack sharedStack]];
-	self.viewModel.bookmarksChangedBlock = ^{
-		[wSelf.tableView reloadData]; // model update
-	};
 }
 
 - (void)setupMapViewDataSource
@@ -109,36 +103,10 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 			wSelf.routeBarItem.title = @"Route";
 		}
 	};
-	self.mapViewDataSource.changesBlock = ^(MapViewDataSourceOperation operation, id<MKAnnotation> annotation) {
-		[wSelf.tableView reloadData]; // model add/delete
-	};
 }
 
 #pragma mark - Properties Getters
 
-- (UITableView *)tableView
-{
-	if (_tableView) {
-		return _tableView;
-	}
-
-	_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.bounds) - 20.0, 250.0)];
-	_tableView.tableFooterView = [UIView new];
-	_tableView.delegate = self;
-	_tableView.dataSource = self;
-	[_tableView registerNib:[UINib nibWithNibName:@"BookmarksTableViewCell" bundle:nil] forCellReuseIdentifier:@"BookmarkCell"];
-	return _tableView;
-}
-
-- (DXPopover *)popover
-{
-	if (_popover) {
-		return _popover;
-	}
-
-	_popover = [DXPopover popover];
-	return _popover;
-}
 
 #pragma mark - Properties Setters
 
@@ -234,8 +202,16 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 	if (self.mapViewDataSource.inRouteMode) {
 		[self.mapViewDataSource clearRoute];
 	} else {
-		UITouch *touch = [event.allTouches anyObject];
-		[self.popover showAtView:touch.view withContentView:self.tableView];
+		typeof(self) __weak wSelf = self;
+		BookmarksListViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"BookmarksListViewController"];
+		vc.viewModel = self.viewModel;
+		vc.bookmarkSelectedBlock = ^(BookmarkViewModel *viewModel) {
+			[wSelf.popover dismissPopoverAnimated:YES completion:^{
+				[wSelf buildRouteToAnnotation:viewModel];
+			}];
+		};
+		self.popover = [[WYPopoverController alloc] initWithContentViewController:vc];
+		[self.popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 	}
 }
 
@@ -243,33 +219,6 @@ static NSString *const kShowBookmarkDetailsSegueIdentifier = @"ShowBookmarkDetai
 {
 	BookmarkViewModel *viewModel = notification.object;
 	[self.mapViewDataSource removeAnnotation:viewModel];
-}
-
-#pragma mark - TableView DD
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-	return self.mapViewDataSource.annotations.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return [tableView dequeueReusableCellWithIdentifier:@"BookmarkCell" forIndexPath:indexPath];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
-		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		bCell.viewModel = self.mapViewDataSource.annotations[indexPath.row];
-	}
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	[self buildRouteToAnnotation:self.mapViewDataSource.annotations[indexPath.row]];
-	[self.popover dismiss];
 }
 
 @end

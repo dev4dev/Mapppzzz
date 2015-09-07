@@ -78,7 +78,7 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"BookmarkDetails"]) {
+	if ([segue.identifier isEqualToString:kDetailsSegueIdentifier]) {
 		NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
 		BookmarksTableViewCell *cell = (BookmarksTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
 
@@ -130,7 +130,13 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self performSegueWithIdentifier:@"BookmarkDetails" sender:self];
+	if (self.bookmarkSelectedBlock) {
+		NSIndexPath *selectedIndexPath = self.tableView.indexPathForSelectedRow;
+		BookmarksTableViewCell *cell = (BookmarksTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedIndexPath];
+		self.bookmarkSelectedBlock(cell.viewModel);
+	} else {
+		[self performSegueWithIdentifier:kDetailsSegueIdentifier sender:self];
+	}
 }
 
 #pragma mark - NSFetchedResultsController Delegate

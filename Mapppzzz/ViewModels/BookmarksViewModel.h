@@ -10,13 +10,9 @@
 #import "Bookmark.h"
 #import "CoreDataStack.h"
 
-typedef void(^BookmarksViewModelVoidBlock)(void);
-
 @class BookmarkViewModel;
 
 @interface BookmarksViewModel : NSObject
-
-@property (nonatomic, copy) BookmarksViewModelVoidBlock bookmarksChangedBlock;
 
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack;
 

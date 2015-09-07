@@ -56,9 +56,6 @@
 
 	[self.annotations addObject:annotation];
 	[self.mapView addAnnotation:annotation];
-	if (self.changesBlock) {
-		self.changesBlock(MapViewDataSourceOperationAdded, annotation);
-	}
 }
 
 - (void)addAnnotations:(NSArray *)annotations
@@ -75,9 +72,6 @@
 		[self clearRoute];
 	}
 	[self.mapView removeAnnotation:annotation];
-	if (self.changesBlock) {
-		self.changesBlock(MapViewDataSourceOperationDeleted, annotation);
-	}
 }
 
 - (void)updateAnnotationsOnMap

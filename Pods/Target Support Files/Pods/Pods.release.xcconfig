@@ -1,5 +1,5 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/DXPopover" "${PODS_ROOT}/Headers/Public/Keys" "${PODS_ROOT}/Headers/Public/MMProgressHUD" "${PODS_ROOT}/Headers/Public/YOLOKit"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/DXPopover" -isystem "${PODS_ROOT}/Headers/Public/Keys" -isystem "${PODS_ROOT}/Headers/Public/MMProgressHUD" -isystem "${PODS_ROOT}/Headers/Public/YOLOKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/Keys" "${PODS_ROOT}/Headers/Public/MMProgressHUD" "${PODS_ROOT}/Headers/Public/WYPopoverController" "${PODS_ROOT}/Headers/Public/YOLOKit"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/Keys" -isystem "${PODS_ROOT}/Headers/Public/MMProgressHUD" -isystem "${PODS_ROOT}/Headers/Public/WYPopoverController" -isystem "${PODS_ROOT}/Headers/Public/YOLOKit"
 OTHER_LDFLAGS = $(inherited) -ObjC -l"Keys" -framework "Foundation"
 PODS_ROOT = ${SRCROOT}/Pods

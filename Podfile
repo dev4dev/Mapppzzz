@@ -13,8 +13,8 @@ target 'Mapppzzz' do
   pod 'AFNetworking', '~> 2.6'
   pod 'YOLOKit/map'
   pod 'YOLOKit/select'
-  pod 'DXPopover', '~> 0.1'
   pod 'MMProgressHUD', '~> 0.3'
+  pod 'WYPopoverController', '~> 0.3'
 end
 
 target 'MapppzzzTests' do

@@ -22,17 +22,10 @@
 
 #pragma mark - Init & Dealloc
 
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)initWithCoreDataStack:(CoreDataStack *)coreDataStack
 {
 	if (self = [self init]) {
 		_coreDataStack = coreDataStack;
-
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextChanges:) name:NSManagedObjectContextDidSaveNotification object:self.context];
 	}
 
 	return self;
@@ -89,11 +82,5 @@
 
 #pragma mark - Private methods
 
-- (void)contextChanges:(NSNotification *)notification
-{
-	if (self.bookmarksChangedBlock) {
-		self.bookmarksChangedBlock();
-	}
-}
 
 @end
