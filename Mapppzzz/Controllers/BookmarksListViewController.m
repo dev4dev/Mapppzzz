@@ -93,6 +93,14 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 	
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+	BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
+	Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
+
+	bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+}
+
 #pragma mark - TableView DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -108,10 +116,7 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ([cell isKindOfClass:[BookmarksTableViewCell class]]) {
-		BookmarksTableViewCell *bCell = (BookmarksTableViewCell *)cell;
-		Bookmark *bookmark = [self.fetchController objectAtIndexPath:indexPath];
-
-		bCell.viewModel = [[BookmarkViewModel alloc] initWithModel:bookmark];
+		[self configureCell:cell atIndexPath:indexPath];
 	}
 }
 
@@ -163,7 +168,7 @@ static NSString *const kDetailsSegueIdentifier = @"BookmarkDetails";
 			break;
 		}
 		case NSFetchedResultsChangeUpdate: {
-			[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+			[self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 			break;
 		}
 		default: {
